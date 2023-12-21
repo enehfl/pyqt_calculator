@@ -64,6 +64,13 @@ class Main(QDialog):
         button_square_root = QPushButton("x^1/2")
         button_plus_minus = QPushButton("+/-")
 
+        ### 새로운 버튼 시그널 설정
+        button_remainder.clicked.connect(lambda state, operation = "%": self.button_operation_clicked(operation))
+        button_clear_all.clicked.connect(self.button_clear_clicked)
+        button_reciprocal.clicked.connect(lambda state, operation = "**-1": self.button_square_clicked(operation))
+        button_square.clicked.connect(lambda state, operation = "**2": self.button_square_clicked(operation))
+        button_square_root.clicked.connect(lambda state, operation = "**0.5": self.button_square_clicked(operation))
+
         ### 버튼들 레이아웃에 추가
         layout_operation.addWidget(button_remainder, 0, 0)
         layout_operation.addWidget(button_clear_all, 0, 1)
@@ -131,6 +138,11 @@ class Main(QDialog):
         solution = solution[:-1]
         temp = temp[:-1]
         self.solution.setText(solution)
+
+    def button_square_clicked(self, operation):
+        solution = self.solution.text()
+        solution += operation
+        self.solution.setText(str(eval(solution)))
 
 if __name__ == '__main__':
     ### 이항연산자 연산용 변수
