@@ -11,13 +11,13 @@ class Main(QDialog):
 
         ### 각 위젯을 배치할 레이아웃을 미리 만들어 둠
         layout_operation = QGridLayout()
-        layout_equation_solution = QFormLayout()
+        layout_solution = QFormLayout()
 
         ### 수식 입력과 답 출력을 위한 LineEdit 위젯 생성
         self.solution = QLineEdit("")
 
         ### layout_equation_solution 레이아웃에 수식, 답 위젯을 추가
-        layout_equation_solution.addRow(self.solution)
+        layout_solution.addRow(self.solution)
 
         ### 사칙연산 버튼 생성
         button_plus = QPushButton("+")
@@ -33,7 +33,7 @@ class Main(QDialog):
         ### 소숫점 버튼과 00 버튼 생성
         button_dot = QPushButton(".")
         button_double_zero = QPushButton("00")
-
+        test = 1
         ##3 숫자 버튼 생성
         number_button_dict = {}
         for number in range(0, 10):
@@ -91,7 +91,7 @@ class Main(QDialog):
         layout_operation.addWidget(button_equal, 5, 3)
 
         ### 각 레이아웃을 main_layout 레이아웃에 추가
-        main_layout.addLayout(layout_equation_solution)
+        main_layout.addLayout(layout_solution)
         main_layout.addLayout(layout_operation)
 
         self.setLayout(main_layout)
@@ -101,30 +101,40 @@ class Main(QDialog):
     ### functions ###
     #################
     def number_button_clicked(self, num):
-        equation = self.equation.text()
-        equation += str(num)
-        self.equation.setText(equation)
+        global temp
+        solution = self.solution.text()
+        solution += str(num)
+        self.solution.setText(solution)
+        if temp != "":
+            temp += str(num)
 
     def button_operation_clicked(self, operation):
-        equation = self.equation.text()
-        equation += operation
-        self.equation.setText(equation)
-
-    def button_equal_clicked(self):
-        equation = self.equation.text()
-        solution = eval(equation)
-        self.solution.setText(str(solution))
-
-    def button_clear_clicked(self):
-        self.equation.setText("")
+        global temp
+        solution = self.solution.text() 
+        temp = solution + operation
         self.solution.setText("")
 
+    def button_equal_clicked(self):
+        global temp
+        if temp != "":
+            solution = eval(temp)
+            self.solution.setText(str(solution))
+
+    def button_clear_clicked(self):
+        global temp
+        self.solution.setText("")
+        temp = ""
+
     def button_backspace_clicked(self):
-        equation = self.equation.text()
-        equation = equation[:-1]
-        self.equation.setText(equation)
+        global temp
+        solution = self.solution.text()
+        solution = solution[:-1]
+        temp = temp[:-1]
+        self.solution.setText(solution)
 
 if __name__ == '__main__':
+    ### 이항연산자 연산용 변수
+    temp = ""
     app = QApplication(sys.argv)
     main = Main()
     sys.exit(app.exec_())
