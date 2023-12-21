@@ -27,7 +27,7 @@ class Main(QDialog):
 
         ### =, clear, backspace 버튼 생성
         button_equal = QPushButton("=")
-        button_clear = QPushButton("Clear")
+        button_clear = QPushButton("C")
         button_backspace = QPushButton("Backspace")
 
         ### 소숫점 버튼과 00 버튼 생성
@@ -56,15 +56,22 @@ class Main(QDialog):
         button_dot.clicked.connect(lambda state, num = ".": self.number_button_clicked(num))
         button_double_zero.clicked.connect(lambda state, num = "00": self.number_button_clicked(num))
 
-        temp = QPushButton(" ")
+        ### 새로운 버튼 생성
+        button_remainder = QPushButton("%")
+        button_clear_all = QPushButton("CE")
+        button_reciprocal = QPushButton("1/x")
+        button_square = QPushButton("x^2")
+        button_square_root = QPushButton("x^1/2")
+        button_plus_minus = QPushButton("+/-")
+
         ### 버튼들 레이아웃에 추가
-        layout_operation.addWidget(temp, 0, 0)
-        layout_operation.addWidget(temp, 0, 1)
+        layout_operation.addWidget(button_remainder, 0, 0)
+        layout_operation.addWidget(button_clear_all, 0, 1)
         layout_operation.addWidget(button_clear, 0, 2)
         layout_operation.addWidget(button_backspace, 0, 3)
-        layout_operation.addWidget(temp, 1, 0)
-        layout_operation.addWidget(temp, 1, 1)
-        layout_operation.addWidget(temp, 1, 2)
+        layout_operation.addWidget(button_reciprocal, 1, 0)
+        layout_operation.addWidget(button_square, 1, 1)
+        layout_operation.addWidget(button_square_root, 1, 2)
         layout_operation.addWidget(button_division, 1, 3)
         layout_operation.addWidget(number_button_dict[7], 2, 0)
         layout_operation.addWidget(number_button_dict[8], 2, 1)
@@ -78,7 +85,7 @@ class Main(QDialog):
         layout_operation.addWidget(number_button_dict[2], 4, 1)
         layout_operation.addWidget(number_button_dict[3], 4, 2)
         layout_operation.addWidget(button_plus, 4, 3)
-        layout_operation.addWidget(temp, 5, 0)
+        layout_operation.addWidget(button_plus_minus, 5, 0)
         layout_operation.addWidget(number_button_dict[0], 5, 1)
         layout_operation.addWidget(button_dot, 5, 2)
         layout_operation.addWidget(button_equal, 5, 3)
